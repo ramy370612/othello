@@ -8,6 +8,32 @@
   padding: 0 0.5rem;
 }
 
+.boardStyle {
+  display: flex;
+  flex-wrap: wrap;
+  width: 640px;
+  height: 640px;
+  background-color: darkgreen;
+}
+
+.cellStyle {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+}
+
+.stoneStyle {
+  display: flex;
+  flex-wrap: wrap;
+  width: 56px;
+  height: 56px;
+  margin: 12px;
+  background-color: white;
+  border-radius: 50%;
+}
+
 .main {
   display: flex;
   flex: 1;
@@ -90,7 +116,9 @@
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .card:hover,
