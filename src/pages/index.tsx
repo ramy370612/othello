@@ -24,60 +24,110 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+  // const clickHandler = (x: number, y: number) => {
+  //   console.log(x, y);
+  //   const newBoard = structuredClone(board);
+
+  //   if (board[y][x] !== 0) return;
+
+  //   for (const [dy, dx] of directions) {
+  //     // const nx = x + dx;
+  //     // const ny = y + dy;
+  //     let findOpponent: boolean = false;
+  //     let i = 0;
+
+  //     while (i < 8) {
+  //       i++;
+
+  //       const stone = board[y + dy * i][x + dx * i];
+
+  //       if (stone === 0) break; //石が空の石の時
+  //       if (stone === 3 - turnColor) { //石が相手の石の時
+  //         findOpponent = true;
+  //         continue;
+  //       }
+  //       if (stone === turnColor) { //自分の色に到達した
+  //         if (findOpponent) { //相手の石を挟んでいるとき
+  //           newBoard[y][x] = turnColor;
+  //           setBoard(newBoard);
+  //           setTurnColor(3 - turnColor);
+  //           break;
+  //         } else { //相手の色を挟んでいないとき
+  //           break;
+  //         }
+  //       }
+  //     }
+  //   }
+
   const clickHandler = (x: number, y: number) => {
     console.log(x, y);
-    const newBoard = structuredClone(board);
+    if (board[y][x] !== 0) return; //すでに石が置いてある場合、何もしない
 
-    if (board[y][x] !== 0) return;
+    const newBoard = structuredClone(board);
+    let findOpponent: boolean = false;
 
     for (const [dy, dx] of directions) {
-      // const nx = x + dx;
-      // const ny = y + dy;
-      let findOpponent: boolean = false;
-      let i = 0;
+      let i = 1;
+      const tilesToFlip = []; //候補リスト
+      let nx, ny;
 
-      while (i < 8) {
-        i++;
+      while (true) {
+        //石がひっくり返せるまで
+        nx = x + dx * i;
+        ny = y + dy * i;
 
-        const stone = board[y + dy * i][x + dx * i];
+        //【石がない場合】
+        // ボードの範囲を超えた場合、または石が置いていないセルに達した場合はループを終了し、forループに戻る
+        if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8 || board[ny][nx] === 0) break;
 
-        if (stone === 0) break;
-        if (stone === 3 - turnColor) {
-          findOpponent = true;
-          continue;
-        }
-        if (stone === turnColor) {
-          if (findOpponent) {
-            newBoard[y][x] = turnColor;
-            setBoard(newBoard);
-            setTurnColor(3 - turnColor);
-            break;
-          } else {
-            break;
+        //【石がある場合】
+        // 異なる石に到達した場合: tilesToFlip候補リストに記録
+        if (board[ny][nx] === 3 - turnColor) {
+          tilesToFlip.push([ny, nx]);
+
+          //自分の色に到達したとき
+        } else if (board[ny][nx] === turnColor) {
+          if (tilesToFlip.length > 0) {
+            // 自分の色の石に到達し、反転する石のリストが空でない場合
+            findOpponent = true; // 石がひっくり返せる
+            newBoard[y][x] = turnColor; // 新しい石を置く
+            for (const [flipY, flipX] of tilesToFlip) {
+              newBoard[flipY][flipX] = turnColor;
+            }
           }
+          break; //自分の色に到達したが、相手の色を挟んでない場合はループを終了し、forループにもどる
         }
+
+        i++;
       }
+    } //forループ完了
+
+    // 有効な手の場合のみボードとターンを更新
+    if (findOpponent) {
+      setBoard(newBoard);
+      setTurnColor(3 - turnColor);
     }
-
-    // if (board[y + 1] !== undefined && board[y + 1][x] === 3 - turnColor) {
-    //   for (let n = 1; y + n < board.length; n++) {
-    //     console.log(n);
-    //     if (board[y + n] !== undefined && board[y + n][x] === turnColor) {
-    //       while (n > 0) {
-    //         newBoard[y + n][x] = turnColor;
-    //         n--;
-    //       }
-    //       break;
-    //     }
-    //   }
-    //   newBoard[y][x] = turnColor;
-    //   console.log(newBoard);
-    //   setBoard(newBoard);
-    //   setTurnColor(3 - turnColor);
-    // }
-
-    setBoard(newBoard);
   };
+
+  // if (board[y + 1] !== undefined && board[y + 1][x] === 3 - turnColor) {
+  //   for (let n = 1; y + n < board.length; n++) {
+  //     console.log(n);
+  //     if (board[y + n] !== undefined && board[y + n][x] === turnColor) {
+  //       while (n > 0) {
+  //         newBoard[y + n][x] = turnColor;
+  //         n--;
+  //       }
+  //       break;
+  //     }
+  //   }
+  //   newBoard[y][x] = turnColor;
+  //   console.log(newBoard);
+  //   setBoard(newBoard);
+  //   setTurnColor(3 - turnColor);
+  // }
+
+  //   setBoard(newBoard);
+  // };
   return (
     <div className={styles.container}>
       <div className={styles.boardStyle}>
