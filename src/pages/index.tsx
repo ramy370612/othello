@@ -17,10 +17,10 @@ const Home = () => {
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 0, 0, 0],
-    [0, 0, 0, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
@@ -148,13 +148,14 @@ const Home = () => {
               {color !== 0 && (
                 <div
                   className={styles.stoneStyle}
-                  style={{ background: color === 1 ? '#000' : '#fff' }}
+                  style={{ background: color === 1 ? '#000' : color === 2 ? '#ffff' : '#ffff00' }}
                 />
               )}
             </div>
           )),
         )}
       </div>
+
       <div className={styles.turnStyle}>{turnColor === 1 ? '黒' : '白'}の番です</div>
       <div className={styles.turnStyle}>黒は{blackPoint}点です</div>
       <div className={styles.turnStyle}>白は{whitePoint}点です</div>
