@@ -67,11 +67,10 @@ const Home = () => {
     let findOpponent: boolean = false;
 
     for (const [dy, dx] of directions) {
-      let i = 1;
       const tilesToFlip = []; //候補リスト
       let nx, ny;
 
-      while (true) {
+      for (let i = 1; i < 8; i++) {
         //石がひっくり返せるまで
         nx = x + dx * i;
         ny = y + dy * i;
@@ -97,8 +96,6 @@ const Home = () => {
           }
           break; //自分の色に到達したが、相手の色を挟んでない場合はループを終了し、forループにもどる
         }
-
-        i++;
       }
     } //forループ完了
 
@@ -144,6 +141,7 @@ const Home = () => {
           )),
         )}
       </div>
+      <div className={styles.turnStyle}>{turnColor === 1 ? '黒' : '白'}の番です</div>
     </div>
   );
 };

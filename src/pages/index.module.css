@@ -8,6 +8,12 @@
   padding: 0 0.5rem;
 }
 
+.turnStyle {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
 .boardStyle {
   display: flex;
   flex-wrap: wrap;
