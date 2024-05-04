@@ -148,7 +148,7 @@ const Home = () => {
               {color !== 0 && (
                 <div
                   className={styles.stoneStyle}
-                  style={{ background: color === 1 ? '#000' : color === 2 ? '#ffff' : '#ffff00' }}
+                  style={{ background: color === 1 ? '#000' : color === 2 ? '#ffff' : '#f1f19c' }}
                 />
               )}
             </div>
