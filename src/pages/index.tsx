@@ -24,6 +24,20 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+
+  let blackPoint = 0;
+  let whitePoint = 0;
+  for (let y = 1; y < 8; y++) {
+    for (let x = 1; x < 8; x++) {
+      const color = board[y][x];
+      if (color === 1) {
+        blackPoint++;
+      } else if (color === 2) {
+        whitePoint++;
+      }
+    }
+  }
+
   // const clickHandler = (x: number, y: number) => {
   //   console.log(x, y);
   //   const newBoard = structuredClone(board);
@@ -142,6 +156,9 @@ const Home = () => {
         )}
       </div>
       <div className={styles.turnStyle}>{turnColor === 1 ? '黒' : '白'}の番です</div>
+      <div className={styles.turnStyle}>黒は{blackPoint}点です</div>
+      <div className={styles.turnStyle}>白は{whitePoint}点です</div>
+      <div className={styles.turnStyle}>{blackPoint === whitePoint ? '同点です' : ''}</div>
     </div>
   );
 };
