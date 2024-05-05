@@ -17,13 +17,21 @@ const Home = () => {
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 3, 0, 0, 0],
-    [0, 0, 0, 1, 2, 3, 0, 0],
-    [0, 0, 3, 2, 1, 0, 0, 0],
-    [0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
+
+  const boardWithAssists = structuredClone(board);
+
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      boardWithAssists[y][x] = board[y][x];
+    }
+  }
 
   let blackPoint = 0;
   let whitePoint = 0;
@@ -142,7 +150,7 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.boardStyle}>
-        {board.map((row, y) =>
+        {boardWithAssists.map((row, y) =>
           row.map((color, x) => (
             <div className={styles.cellStyle} key={`${x}-${y}`} onClick={() => clickHandler(x, y)}>
               {color !== 0 && (
